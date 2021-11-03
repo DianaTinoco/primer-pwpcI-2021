@@ -1,0 +1,23 @@
+{
+  "name": "pwpc-1",
+  "version": "0.0.1",
+  "description": "Proyecto de pwpc1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DianaTinoco/primer-pwpcI-2021.git"
+  },
+  "keywords": [
+    "FullStack",
+    "node"
+  ],
+  "author": "DLParedes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DianaTinoco/primer-pwpcI-2021/issues"
+  },
+  "homepage": "https://github.com/DianaTinoco/primer-pwpcI-2021#readme"
+}
