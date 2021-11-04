@@ -4,6 +4,8 @@
   "description": "Proyecto de pwpc1",
   "main": "index.js",
   "scripts": {
+    "start": "echo \"Iniciando Programa... \" && node index",
+    "dev": "set enviroment=DEVELOPMENT && node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +21,6 @@
   "bugs": {
     "url": "https://github.com/DianaTinoco/primer-pwpcI-2021/issues"
   },
-  "homepage": "https://github.com/DianaTinoco/primer-pwpcI-2021#readme"
+  "homepage": "https://github.com/DianaTinoco/primer-pwpcI-2021#readme",
+  "type": "module"
 }
