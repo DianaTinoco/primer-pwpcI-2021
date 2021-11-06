@@ -6,36 +6,48 @@ import http from 'http';
 // ante cualquier peticion de un recurso a nuestro server
 // (request, renponse)
 const server = http.createServer((req, res) => {
+    // obteniendo el recurso solicitado
+    let { url, method } = req;
+
     //informa en la consola del servidor que se resibe una peticion
-    console.log("> Se ha recibido una peticion.");
+    console.log(`Se ha solicitado el siguiente recurso: ${method}: ${req}`);
 
-    // Registrar informacion de la peticion
-    console.log(`Informacion de la Peticion`)
-    console.log(`Url: ${req.url}`)
-    console.log(`Request Method: ${req.method}`)
+    //filtrar la url
+    if(url === '/'){
+        // Respuesta ante "Get /"
+        // 1. Estableciendo el tipo de retorno
+        // como HTML
+        res.setHeader('Content-Type', 'text/html');
+        // 2. Escribien la respuesta 
+        res.write('<html>');
+        res.write('<head><title>My App</title></head>');
+        res.write('<body><h1>&#9889; Hello from my server &#9889;</h1></body>');
+        res.write('</html>');
+        // Cerrando conexion
+        res.end();
 
-    // Establecer el tipo de contenido que 
-    // se entregara al cliente
-    // res.setHeader('Content-Type', 'text/plain');
-    res.setHeader('Content-Type', 'text/html');
+    }else{
+        //Se registra el Recurso no encontrado
+        console.log(`No se ha encontrado el recurso: ${url}`);
+        // Recurso no encontrado
+        // 1. Estableciendo el tipo de retorno
+        // como HTML
+        res.setHeader('Content-Type', 'text/html');
+        // 2. Escribiendo la respuesta 
+        res.write('<html>');
+        res.write('<head><title>My App</title></head>');
+        res.write('<body><h1>Error: 404 - Recurso no encontrado &#9940;</h1></body>');
+        res.write('</html>');
+        // Cerrando conexion
+        res.end();
+    }
 
-    // Envio el contenido 
-    res.write("<html>");
-    res.write("<head><title>My App</title></head>");
-    res.write(`<body><h1>Hello from the server &#128519;</h1><p style="color:red">Recurso solicitado: ${req.url}</p></body>`);
-    res.write("</html>");
-    // Terminar la conexion
-    res.end();
 });
 
 // 3. Pongo a trabajar el servidor
 // le paso un callback que escribira en la consola
 // cuando el servidor este escuchando
 //192.168.100.6:3000
-server.listen(3000, '192.168.100.6', () => {
-    console.log("Servidor escuchando en http://192.168.100.6:3000")
+server.listen(3000, '0.0.0.0', () => {
+    console.log("Servidor escuchando en http://0.0.0.0:3000")
 });
-
-
-console.log('Hello node');
- 
