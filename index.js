@@ -26,6 +26,24 @@ const server = http.createServer((req, res) => {
         // Cerrando conexion
         res.end();
 
+    }else if(url === '/author'){
+        // Respuesta ante "Get /"
+        // 1. Estableciendo el tipo de retorno
+        // como HTML
+        res.setHeader('Content-Type', 'text/html');
+        let url_image = 'https://lh3.googleusercontent.com/a-/AOh14Giv5DXwlKU2Sa0OVsWllGyI-5PKiFP9JYWz-1V2Pg=s360-p-rw-no';
+        // 2. Escribien la respuesta 
+        res.write('<html>');
+        res.write('<head><title>My App</title></head>');
+        res.write('<body>');
+        res.write('<h1>&#9889; Author &#9889;</h1>');
+        res.write('<p>Diana L Paredes Tinoco - Web Developer</p>');
+        res.write(`<img width = "300px" src = "${url_image}" alt = "Foto Diana Tinoco">`);
+        res.write('</body>');
+        res.write('</html>');
+        // Cerrando conexion
+        res.end();
+
     }else{
         //Se registra el Recurso no encontrado
         console.log(`No se ha encontrado el recurso: ${url}`);
@@ -48,6 +66,6 @@ const server = http.createServer((req, res) => {
 // le paso un callback que escribira en la consola
 // cuando el servidor este escuchando
 //192.168.100.6:3000
-server.listen(3000, '0.0.0.0', () => {
-    console.log("Servidor escuchando en http://0.0.0.0:3000")
+server.listen(3000, '192.168.100.6', () => {
+    console.log("Servidor escuchando en http://192.168.100.6:3000")
 });
