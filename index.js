@@ -1,4 +1,5 @@
 // Import el modulo http
+import { fstat } from 'fs';
 import http from 'http';
 
 // Crear el servidor
@@ -19,13 +20,55 @@ const server = http.createServer((req, res) => {
         // como HTML
         res.setHeader('Content-Type', 'text/html');
         // 2. Escribien la respuesta 
-        res.write('<html>');
-        res.write('<head><title>My App</title></head>');
-        res.write('<body><h1>&#9889; Hello from my server &#9889;</h1></body>');
-        res.write('</html>');
+        res.write(`
+        <html>
+          <head>
+            <title>Enter message</title>
+          </head>
+          <body>
+            <h1>Send Message</h1>
+            <form action ="/message" method = "POST">
+               <input type="text" name="message">
+               <button type="submit">send</button>
+            </form>
+          </body>
+        </html>
+        `);
         // Cerrando conexion
         res.end();
-
+    
+    }else if(url === '/message' && method === "POST"){
+       // 1. Se crea una variable para guardar los datos de entrada
+       let body = [];
+       // 2. Registrar un manejador para la entrada de datos
+       req.on("data", (chuck) => { //manejador de EVENTOS
+        //2.1 Registrando los trozos que llegan al backend
+        console.log(chuck);
+        // 2.2 Acumulo los datos de entrada
+        body.push(chuck);
+        //2.3 Proteccion en caso de recepcion masiva de datos ANTI HACK
+        if(body.length > 1e6) req.socket.destroy();
+    });
+    //3. Registrando un manejador de fin de recepcion de datos
+    req.on("end", () => {
+        // Buffer: permite crear memorias compactadas 
+        const parsedBody = Buffer.concat(body).toString();
+        const message = parsedBody.split('=')[1];
+        res.write(`
+        <html>
+          <head>
+            <title>Enter message</title>
+          </head>
+          <body>
+            <h1>Received Message</h1>
+            <p>Thank you!!!</p>
+            <p>The message we recived was this: ${message}</p>
+          </body>
+        </html>
+          `);
+          //Finalizo coneccion
+          return res.end();
+        });
     }else if(url === '/author'){
         // Respuesta ante "Get /"
         // 1. Estableciendo el tipo de retorno
@@ -68,4 +111,4 @@ const server = http.createServer((req, res) => {
 //192.168.100.6:3000
 server.listen(3000, '192.168.100.6', () => {
     console.log("Servidor escuchando en http://192.168.100.6:3000")
-});
+}); 
