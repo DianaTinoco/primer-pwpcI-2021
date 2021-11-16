@@ -1,6 +1,6 @@
 
 // Import el modulo http
-import { fstat } from 'fs';
+import fs from 'fs';
 import http from 'http';
 
 // Crear el servidor
@@ -52,24 +52,19 @@ const server = http.createServer((req, res) => {
     });
     //3. Registrando un manejador de fin de recepcion de datos
     req.on("end", () => {
-        // Buffer: permite crear memorias compactadas 
-        const parsedBody = Buffer.concat(body).toString();
-        const message = parsedBody.split('=')[1];
-        res.write(`
-        <html>
-          <head>
-            <title>Enter message</title>
-          </head>
-          <body>
-            <h1>Received Message</h1>
-            <p>Thank you!!!</p>
-            <p>The message we recived was this: ${message}</p>
-          </body>
-        </html>
-          `);
-          //Finalizo coneccion
-          return res.end();
-        });
+      // Buffer: permite crear memorias compactadas 
+      const parsedBody = Buffer.concat(body).toString();
+      const message = parsedBody.split("=")[1];
+      //Guardando el mensaje en un archivo
+      fs.writeFileSync('message.txt', message);
+      //Establecer el status code de redireccionamiento
+      res.statusCode = 302;
+      //Establecer la ruta de direccionamiento 
+      res.setHeader('Location','/');
+      //Finalizo coneccion
+      return res.end();
+        
+    });
     }else if(url === '/author'){
         // Respuesta ante "Get /"
         // 1. Estableciendo el tipo de retorno
