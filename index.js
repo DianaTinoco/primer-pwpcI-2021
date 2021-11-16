@@ -50,12 +50,23 @@ const server = http.createServer((req, res) => {
         //2.3 Proteccion en caso de recepcion masiva de datos ANTI HACK
         if(body.length > 1e6) req.socket.destroy();
     });
+    // Funcionando de manera asincrona 
     //3. Registrando un manejador de fin de recepcion de datos
     req.on("end", () => {
       // Buffer: permite crear memorias compactadas 
       const parsedBody = Buffer.concat(body).toString();
       const message = parsedBody.split("=")[1];
       //Guardando el mensaje en un archivo
+      fs.writeFile('message.txt', message, (err)=>{
+        //verificacion si hubo error
+        if(err){
+          console.log("> No se pudo grabar el arcchivo");
+          res.statusCode = 500; // Internal Server Error
+          res.headersSent("Content-Type", "text/html");
+          res.write("ERROR WHEN LOADING FILE");
+          return res.end();
+        }
+      
       fs.writeFileSync('message.txt', message);
       //Establecer el status code de redireccionamiento
       res.statusCode = 302;
@@ -63,9 +74,10 @@ const server = http.createServer((req, res) => {
       res.setHeader('Location','/');
       //Finalizo coneccion
       return res.end();
+      });
         
     });
-    }else if(url === '/author'){
+} else if(url === '/author'){
         // Respuesta ante "Get /"
         // 1. Estableciendo el tipo de retorno
         // como HTML
@@ -83,7 +95,7 @@ const server = http.createServer((req, res) => {
         // Cerrando conexion
         res.end();
 
-    }else{
+} else{
         //Se registra el Recurso no encontrado
         console.log(`No se ha encontrado el recurso: ${url}`);
         // Recurso no encontrado
