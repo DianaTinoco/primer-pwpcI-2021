@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "echo \"Iniciando Programa... \" && node index",
-    "dev": "set enviroment=DEVELOPMENT && node index",
+    "dev": "set enviroment=DEVELOPMENT && nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +22,11 @@
     "url": "https://github.com/DianaTinoco/primer-pwpcI-2021/issues"
   },
   "homepage": "https://github.com/DianaTinoco/primer-pwpcI-2021#readme",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
