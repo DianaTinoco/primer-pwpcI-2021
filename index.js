@@ -18,10 +18,14 @@ app.use('/about',(_, res)=>{
     res.send("<h1>Acerca de...</h1>\n Sitio inicial hecho en NodeJs");
 });
 
-app.use('/',(_, res)=>{
-    console.log('Se ha realizado la petici on: "/"');
+// La ruta raiz entra en todo tipo de peticion
+// raiz siempre se va al final 
+// Asociacion de dos rutas '/' y '/home'
+app.use(['/','/home'],(_, res)=>{
+    console.log('Se ha realizado la peticion: "/"');
     res.send("<h1>Mi App</h1>\n Bienvenido a este sitio");
 });
+
 
 // Poniendo a escuchar la app de express
 app.listen(3000,'192.168.100.6',()=>{
