@@ -7,9 +7,10 @@ import routes from "./routes.js"
 // $ nmp i express -S
 import Express  from 'express'
 
+console.log(`Variable de entorno: ${process.env.NODE_ENV}`);
+
 // Crear una instancia de Express
 const app = Express(); // (req, resp, next)=>{ } request handler
-
 // 1. Insertando Middleware para la lectura de datos
 // de un cliente 
 app.use(Express.urlencoded({extended: false}));
