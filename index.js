@@ -41,7 +41,7 @@ app.use('/add-student-form',(_,res)=>{
 });
 
 // Ruta que procesa el formulario
-app.use('/add-student', (req, res, next) => {
+app.post('/add-student', (req, res, next) => {
     // Iterando sobre todo el objeto
     for(const prop in req.body){
         console.log(`${prop}: ${req.body[prop]}`);
