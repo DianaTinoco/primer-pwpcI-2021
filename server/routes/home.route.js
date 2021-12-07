@@ -1,6 +1,10 @@
 // 1 Importando el enrutador de Express
 import { Router } from 'express';
 
+// Importando  el modulo Path de node 
+// para trabajar con rutas absolutas
+import path from 'path'
+
 // 2 Crear una instancia del enrutador
 const router = Router();
 
@@ -12,7 +16,8 @@ router.get('/about',(_,res)=>{
 
 // La ruta raíz entra en todo tipo de petición
 router.get(['/','/home'],(_, res)=>{
-  res.send("<h1>Mi APP</h1>\n🙋‍♂️ Bienvenido a este sitio");
+    const filePath = path.join(path.resolve(), "server", "views", "shop.html");
+  res.sendFile(filePath);
 });
 
 export default router;
